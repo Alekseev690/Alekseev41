@@ -23,6 +23,10 @@ namespace Alekseev41
         public ProductPage()
         {
             InitializeComponent();
+            
+            var currentProduct = Alekseev41Entities.GetContext().Product.ToList();
+
+            ProductListView.ItemsSource = currentProduct;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

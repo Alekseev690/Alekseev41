@@ -10,6 +10,16 @@
             <Setter Property="Width" Value="175"></Setter>
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
         </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>
