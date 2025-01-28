@@ -27,11 +27,73 @@ namespace Alekseev41
             var currentProduct = Alekseev41Entities.GetContext().Product.ToList();
 
             ProductListView.ItemsSource = currentProduct;
+
+            ComboType.SelectedIndex = 0;
+
+            UpdateProduct();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void UpdateProduct()
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            var currentProducts = Alekseev41Entities.GetContext().Product.ToList();
+
+            if (ComboType.SelectedIndex == 0)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 0 && Convert.ToInt32(p.ProductMaxDiscount) <= 100)).ToList();
+            }
+            if (ComboType.SelectedIndex == 1)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 0 && Convert.ToInt32(p.ProductMaxDiscount) < 5)).ToList();
+            }
+            if (ComboType.SelectedIndex == 2)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 5 && Convert.ToInt32(p.ProductMaxDiscount) < 15)).ToList();
+            }
+            if (ComboType.SelectedIndex == 3)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 15 && Convert.ToInt32(p.ProductMaxDiscount) < 30)).ToList();
+            }
+            if (ComboType.SelectedIndex == 4)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 30 && Convert.ToInt32(p.ProductMaxDiscount) < 70)).ToList();
+            }
+            if (ComboType.SelectedIndex == 5)
+            {
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 70 && Convert.ToInt32(p.ProductMaxDiscount) < 100)).ToList();
+            }
+
+            currentProducts = currentProducts.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+
+            ProductListView.ItemsSource = currentProducts.ToList();
+
+            if (RButtonDown.IsChecked.Value)
+            {
+                ProductListView.ItemsSource = currentProducts.OrderByDescending(p => p.ProductCost).ToList();
+            }
+            if (RButtonUp.IsChecked.Value)
+            {
+                ProductListView.ItemsSource = currentProducts.OrderBy(p => p.ProductCost).ToList();
+            }
+        }
+
+        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateProduct();
+        }
+
+        private void ComboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateProduct();
+        }
+
+        private void RButtonUp_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateProduct();
+        }
+
+        private void RButtonDown_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateProduct();
         }
     }
 }

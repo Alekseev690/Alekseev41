@@ -23,7 +23,6 @@ namespace Alekseev41
 
             return _context;
         }
-
         public Alekseev41Entities()
             : base("name=Alekseev41Entities")
         {

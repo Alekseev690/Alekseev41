@@ -160,16 +160,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AlekseevModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AlekseevModel.Context.cs</LastGenOutput>
-      <DependentUpon>AlekseevModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="AlekseevModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AlekseevModel.edmx</DependentUpon>
-      <LastGenOutput>AlekseevModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="images\J384T6.jpg" />
     <Resource Include="images\А112Т4.jpg" />
     <Resource Include="images\B320R5.jpg" />
@@ -188,6 +178,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AlekseevModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AlekseevModel.edmx</DependentUpon>
+      <LastGenOutput>AlekseevModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AlekseevModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AlekseevModel.edmx</DependentUpon>
+      <LastGenOutput>AlekseevModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
