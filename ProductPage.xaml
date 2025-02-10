@@ -16,7 +16,15 @@
         </Grid.RowDefinitions>
 
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel Margin="5" Orientation="Horizontal" Height="25">
+
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="25" Margin="5">
+                <TextBlock Text="Кол-во записей: " FontSize="20" HorizontalAlignment="Left" ></TextBlock>
+                <TextBlock Name="TBlockCount" FontSize="20" HorizontalAlignment="Left" ></TextBlock>
+                <TextBlock Text=" из " FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                <TextBlock Name="TBlockMaxCount" FontSize="20" HorizontalAlignment="Left"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Margin="5" Orientation="Horizontal" Height="25" HorizontalAlignment="Left">
                 <TextBlock Text="Поиск по наименованию" TextAlignment="Right" Width="250" FontSize="20"></TextBlock>
                 <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" FontSize="15"/>
             </StackPanel>
@@ -26,9 +34,9 @@
                 <RadioButton Content="По убыванию стоимости" Name="RButtonDown" GroupName="Sort" Width="300" FontSize="20" Checked="RButtonDown_Checked"></RadioButton>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Text="Фильтрация по скидке" TextAlignment="Right" Width="220" FontSize="20" Height="25"/>
-                <ComboBox x:Name="ComboType" SelectionChanged="ComboType_SelectionChanged" FontSize="15" Width="100" Height="25">
+                <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged" FontSize="15" Width="200" Height="25">
                     <TextBlock><Run Text="Все"/></TextBlock>
                     <TextBlock><Run Text="от 0 до 5%"/></TextBlock>
                     <TextBlock><Run Text="от 5 до 15%"/></TextBlock>

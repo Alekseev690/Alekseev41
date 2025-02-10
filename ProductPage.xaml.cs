@@ -62,10 +62,6 @@ namespace Alekseev41
                 currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 70 && Convert.ToInt32(p.ProductMaxDiscount) < 100)).ToList();
             }
 
-            currentProducts = currentProducts.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
-
-            ProductListView.ItemsSource = currentProducts.ToList();
-
             if (RButtonDown.IsChecked.Value)
             {
                 ProductListView.ItemsSource = currentProducts.OrderByDescending(p => p.ProductCost).ToList();
@@ -74,6 +70,13 @@ namespace Alekseev41
             {
                 ProductListView.ItemsSource = currentProducts.OrderBy(p => p.ProductCost).ToList();
             }
+
+            currentProducts = currentProducts.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+
+            TBlockCount.Text = Convert.ToString(currentProducts.Count());
+            TBlockMaxCount.Text = Convert.ToString(Alekseev41Entities.GetContext().Product.Count());
+
+            ProductListView.ItemsSource = currentProducts.ToList();
         }
 
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
