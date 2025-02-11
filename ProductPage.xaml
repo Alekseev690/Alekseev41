@@ -17,6 +17,13 @@
 
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
+            <StackPanel Orientation="Horizontal" Width="500">
+                <TextBlock Text="Вы авторизованы как " FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                <TextBox Name="FIOTB" FontSize="20" Width="270"></TextBox>
+                <TextBlock Text="Роль: " FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                <TextBox Name="RoleTB" FontSize="20" Width="120"></TextBox>
+            </StackPanel>
+
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="25" Margin="5">
                 <TextBlock Text="Кол-во записей: " FontSize="20" HorizontalAlignment="Left" ></TextBlock>
                 <TextBlock Name="TBlockCount" FontSize="20" HorizontalAlignment="Left" ></TextBlock>

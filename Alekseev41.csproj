@@ -69,6 +69,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AuthPage.xaml.cs">
+      <DependentUpon>AuthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs">
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
     <Page Include="AddEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AuthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

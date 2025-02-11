@@ -20,10 +20,21 @@ namespace Alekseev41
     /// </summary>
     public partial class ProductPage : Page
     {
-        public ProductPage()
+        public ProductPage(User user)
         {
             InitializeComponent();
             
+            FIOTB.Text = user.UserSurname + " " + user.UserName + " " + user.UserPatronymic;
+            switch(user.UserRole)
+            {
+                case 1:
+                    RoleTB.Text = "Клиент"; break;
+                case 2:
+                    RoleTB.Text = "Менеджер"; break;
+                case 3:
+                    RoleTB.Text = "Администратор"; break;
+            }
+
             var currentProduct = Alekseev41Entities.GetContext().Product.ToList();
 
             ProductListView.ItemsSource = currentProduct;
