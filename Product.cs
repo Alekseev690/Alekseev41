@@ -32,6 +32,14 @@ namespace Alekseev41
         public int ProductQuantityInStock { get; set; }
         public string ProductDescription { get; set; }
         public string ProductPhoto { get; set; }
+        public int ProductCostInt
+        {
+            get
+            {
+                return Convert.ToInt32(ProductCost);
+            }
+            set { }
+        }
         public string ProductPhotoPath
         {
             get

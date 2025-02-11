@@ -38,11 +38,9 @@
                 <TextBlock Text="Фильтрация по скидке" TextAlignment="Right" Width="220" FontSize="20" Height="25"/>
                 <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged" FontSize="15" Width="200" Height="25">
                     <TextBlock><Run Text="Все"/></TextBlock>
-                    <TextBlock><Run Text="от 0 до 5%"/></TextBlock>
-                    <TextBlock><Run Text="от 5 до 15%"/></TextBlock>
-                    <TextBlock><Run Text="от 15 до 30%"/></TextBlock>
-                    <TextBlock><Run Text="от 30 до 70%"/></TextBlock>
-                    <TextBlock><Run Text="от 70 до 100%"/></TextBlock>
+                    <TextBlock><Run Text="от 0 до 9,99%"/></TextBlock>
+                    <TextBlock><Run Text="от 10 до 14,99%"/></TextBlock>
+                    <TextBlock><Run Text="от 15 и более"/></TextBlock>
                 </ComboBox>
             </StackPanel>
         </WrapPanel>
@@ -78,9 +76,9 @@
                         <TextBlock Text="{Binding ProductName}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="35"></TextBlock>
                         <TextBlock Text="{Binding ProductDescription}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         <TextBlock Text="{Binding ProductManufacturer}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20"></TextBlock>
-                        <TextBlock Text="{Binding ProductCost, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20"></TextBlock>
+                        <TextBlock Text="{Binding ProductCostInt, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20"></TextBlock>
                         <TextBlock Text="Скидка" HorizontalAlignment="Center" FontSize="20" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Margin="4"></TextBlock>
-                        <TextBlock Text="{Binding ProductMaxDiscount, StringFormat={}{0} %}" FontSize="20" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding ProductDiscountAmount, StringFormat={}{0} %}" FontSize="30" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

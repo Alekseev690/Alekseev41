@@ -39,36 +39,28 @@ namespace Alekseev41
 
             if (ComboType.SelectedIndex == 0)
             {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 0 && Convert.ToInt32(p.ProductMaxDiscount) <= 100)).ToList();
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductDiscountAmount) >= 0 && Convert.ToInt32(p.ProductDiscountAmount) <= 100)).ToList();
             }
             if (ComboType.SelectedIndex == 1)
             {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 0 && Convert.ToInt32(p.ProductMaxDiscount) < 5)).ToList();
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductDiscountAmount) >= 0 && Convert.ToInt32(p.ProductDiscountAmount) < 10)).ToList();
             }
             if (ComboType.SelectedIndex == 2)
             {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 5 && Convert.ToInt32(p.ProductMaxDiscount) < 15)).ToList();
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductDiscountAmount) >= 10 && Convert.ToInt32(p.ProductDiscountAmount) < 15)).ToList();
             }
             if (ComboType.SelectedIndex == 3)
             {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 15 && Convert.ToInt32(p.ProductMaxDiscount) < 30)).ToList();
-            }
-            if (ComboType.SelectedIndex == 4)
-            {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 30 && Convert.ToInt32(p.ProductMaxDiscount) < 70)).ToList();
-            }
-            if (ComboType.SelectedIndex == 5)
-            {
-                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductMaxDiscount) >= 70 && Convert.ToInt32(p.ProductMaxDiscount) < 100)).ToList();
+                currentProducts = currentProducts.Where(p => (Convert.ToInt32(p.ProductDiscountAmount) >= 15 && Convert.ToInt32(p.ProductDiscountAmount) < 100)).ToList();
             }
 
             if (RButtonDown.IsChecked.Value)
             {
-                ProductListView.ItemsSource = currentProducts.OrderByDescending(p => p.ProductCost).ToList();
+                currentProducts = currentProducts.OrderByDescending(p => p.ProductCostInt).ToList();
             }
             if (RButtonUp.IsChecked.Value)
             {
-                ProductListView.ItemsSource = currentProducts.OrderBy(p => p.ProductCost).ToList();
+               currentProducts = currentProducts.OrderBy(p => p.ProductCostInt).ToList();
             }
 
             currentProducts = currentProducts.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
