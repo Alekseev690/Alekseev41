@@ -15,16 +15,19 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-            <StackPanel Orientation="Horizontal" Width="500">
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0">
                 <TextBlock Text="Вы авторизованы как " FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                <TextBox Name="FIOTB" FontSize="20" Width="270"></TextBox>
-                <TextBlock Text="Роль: " FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                <TextBox Name="RoleTB" FontSize="20" Width="120"></TextBox>
+                <TextBlock Name="FIOTB" FontSize="20"></TextBlock>
             </StackPanel>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="25" Margin="5">
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1">
+                <TextBlock Text="Роль: " FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                <TextBlock Name="RoleTB" FontSize="20"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Кол-во записей: " FontSize="20" HorizontalAlignment="Left" ></TextBlock>
                 <TextBlock Name="TBlockCount" FontSize="20" HorizontalAlignment="Left" ></TextBlock>
                 <TextBlock Text=" из " FontSize="20" HorizontalAlignment="Left"></TextBlock>

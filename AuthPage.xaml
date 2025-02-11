@@ -20,16 +20,24 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="1">
-            <TextBlock Text="Логин" FontSize="25" Height="30" Width="200"></TextBlock>
-            <TextBox Name="LoginTB" TextChanged="Login_TextChanged" Height="25" Width="200"></TextBox>
+            <TextBlock Text="Логин" FontSize="25" Height="35" Width="200"></TextBlock>
+            <TextBox Name="LoginTB" Height="25" Width="200"></TextBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <TextBlock Text="Пароль" FontSize="25" Height="30" Width="200"></TextBlock>
-            <TextBox Name="PassTB" TextChanged="Pass_TextChanged" Height="25" Width="200"></TextBox>
+            <TextBlock Text="Пароль" FontSize="25" Height="35" Width="200"></TextBlock>
+            <TextBox Name="PassTB" Height="25" Width="200"></TextBox>
         </StackPanel>
 
         <Button Name="LogingGuestButton" Content="Войти как гость" HorizontalAlignment="Center" Grid.Row="3" Click="LogingGuest_Click"></Button>
         <Button Name="LoginButton" Content="Войти" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" Click="LoginButton_Click"></Button>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Name="captchaPanel">
+            <TextBlock Name="captchaOneWord" FontSize="22" Margin="30,0,0,0"></TextBlock>
+            <TextBlock Name="captchaTwoWord" FontSize="22" TextDecorations="Strikethrough" Margin="0,5,0,0"></TextBlock>
+            <TextBlock Name="captchaThreeWord" FontSize="22" TextDecorations="Strikethrough"></TextBlock>
+            <TextBlock Name="captchaFourWord" FontSize="22" TextDecorations="Strikethrough" Margin="0,10,0,0"></TextBlock>
+        </StackPanel>
+        
     </Grid>
 </Page>

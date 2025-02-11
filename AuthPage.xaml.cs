@@ -27,19 +27,12 @@ namespace Alekseev41
             InitializeComponent();
         }
 
-        private void Login_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Pass_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void LogingGuest_Click(object sender, RoutedEventArgs e)
         {
-
+            string login = LoginTB.Text;
+            string password = PassTB.Text;
+            User user = Alekseev41Entities.GetContext().User.ToList().Find(p => p.UserLogin == login && p.UserPassword == password);
+            Manager.MainFrame.Navigate(new ProductPage(user));
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +56,7 @@ namespace Alekseev41
             {
                 MessageBox.Show("Введены неверные данные");
                 LoginButton.IsEnabled = false;
-                ////
+                Thread.Sleep(10000); // 10 секунд таймер
                 LoginButton.IsEnabled = true;
             }
         }
