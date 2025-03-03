@@ -22,9 +22,28 @@ namespace Alekseev41
     /// </summary>
     public partial class AuthPage : Page
     {
+        private string _captchaAnswer = "";
+        private string _ValidLitters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890";
+        private bool _isCaptched = false;
+
         public AuthPage()
         {
             InitializeComponent();
+        }
+
+        private void CaptchaEnable()
+        {
+            _isCaptched = false;
+            TBCaptcha.Visibility = Visibility.Visible;
+
+            Random random = new Random();
+
+            captchaOneWord.Text = Convert.ToString(_ValidLitters[random.Next(_ValidLitters.Length)]);
+            captchaTwoWord.Text = Convert.ToString(_ValidLitters[random.Next(_ValidLitters.Length)]);
+            captchaThreeWord.Text = Convert.ToString(_ValidLitters[random.Next(_ValidLitters.Length)]);
+            captchaFourWord.Text = Convert.ToString(_ValidLitters[random.Next(_ValidLitters.Length)]);
+
+            _captchaAnswer = captchaOneWord.Text + captchaTwoWord.Text + captchaThreeWord.Text + captchaFourWord.Text;
         }
 
         private void LogingGuest_Click(object sender, RoutedEventArgs e)
@@ -35,13 +54,37 @@ namespace Alekseev41
             Manager.MainFrame.Navigate(new ProductPage(user));
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTB.Text;
             string password = PassTB.Text;
             if (login == "" || password == "")
             {
                 MessageBox.Show("Есть пустые поля");
+                return;
+            }
+
+            if (TBCaptcha.Text == _captchaAnswer)
+                _isCaptched = true;
+
+            if (_isCaptched)
+            {
+                if (TBCaptcha.Text != _captchaAnswer)
+                {
+                    MessageBox.Show("Каптча введена неверно!");
+                    CaptchaEnable();
+                    LoginButton.IsEnabled = false;
+                    await Task.Delay(10000);
+                    LoginButton.IsEnabled = true;
+                    return;
+                }
+                _isCaptched = false;
+                CaptchaPanel.Visibility = Visibility;
+            }
+            if (login == "" || password == "")
+            {
+                MessageBox.Show("Есть пустые поля");
+                CaptchaEnable();
                 return;
             }
 
@@ -55,10 +98,16 @@ namespace Alekseev41
             else
             {
                 MessageBox.Show("Введены неверные данные");
-                LoginButton.IsEnabled = false;
-                Thread.Sleep(10000); // 10 секунд таймер
-                LoginButton.IsEnabled = true;
+                if (TBCaptcha.IsVisible)
+                {
+                    LoginButton.IsEnabled = false;
+                    await Task.Delay(10000);
+                    LoginButton.IsEnabled = true;
+                }
+                CaptchaEnable();
             }
         }
+        
     }
 }
+

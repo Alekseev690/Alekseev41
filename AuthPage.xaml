@@ -29,15 +29,16 @@
             <TextBox Name="PassTB" Height="25" Width="200"></TextBox>
         </StackPanel>
 
-        <Button Name="LogingGuestButton" Content="Войти как гость" HorizontalAlignment="Center" Grid.Row="3" Click="LogingGuest_Click"></Button>
-        <Button Name="LoginButton" Content="Войти" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" Click="LoginButton_Click"></Button>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Name="captchaPanel">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Name="CaptchaPanel" Visibility="Collapsed">
             <TextBlock Name="captchaOneWord" FontSize="22" Margin="30,0,0,0"></TextBlock>
             <TextBlock Name="captchaTwoWord" FontSize="22" TextDecorations="Strikethrough" Margin="0,5,0,0"></TextBlock>
             <TextBlock Name="captchaThreeWord" FontSize="22" TextDecorations="Strikethrough"></TextBlock>
             <TextBlock Name="captchaFourWord" FontSize="22" TextDecorations="Strikethrough" Margin="0,10,0,0"></TextBlock>
+            <TextBox Name="TBCaptcha" TextAlignment="Left" Width="200" Height="30" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" ></TextBox>
         </StackPanel>
         
+        <Button Name="LogingGuestButton" Content="Войти как гость" HorizontalAlignment="Center" Grid.Row="3" Click="LogingGuest_Click"></Button>
+        <Button Name="LoginButton" Content="Войти" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" Click="LoginButton_Click"></Button>
+
     </Grid>
 </Page>
