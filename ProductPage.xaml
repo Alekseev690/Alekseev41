@@ -16,9 +16,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel>
+            <Button Name="OrderButton" Content="Посмотреть заказы" Click="OrderButton_Click" HorizontalAlignment="Left" Width="195"></Button>
+
             <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
-                <TextBlock Text="Вы авторизованы как " FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                <TextBlock Name="FIOTB" FontSize="20"></TextBlock>
+                <TextBlock Text="Вы авторизованы как " FontSize="20" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="FIOTB" FontSize="20"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
@@ -26,6 +28,7 @@
                 <TextBlock x:Name="RoleTB" FontSize="20"/>
             </StackPanel>
         </StackPanel>
+
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1">
             <StackPanel Margin="10" Orientation="Vertical">
                 <TextBlock Text="Кол-во записей: " FontSize="20" HorizontalAlignment="Left" ></TextBlock>
@@ -56,6 +59,11 @@
         </WrapPanel>
 
         <ListView Name="ProductListView" Grid.Row="2">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить к заказу" Click="MenuItem_Click"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

@@ -32,6 +32,15 @@ namespace Alekseev41
         public int ProductQuantityInStock { get; set; }
         public string ProductDescription { get; set; }
         public string ProductPhoto { get; set; }
+        public int OrderProductCount
+        {
+            get
+            {
+                foreach (var item in OrderProduct)
+                    return item.ProductCount;
+                return 1;
+            }
+        }
         public int ProductCostInt
         {
             get

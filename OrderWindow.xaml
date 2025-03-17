@@ -8,29 +8,87 @@
         Title="OrderWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="216"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="270"></ColumnDefinition>
+            <ColumnDefinition Width="1000"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="550"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Дата формирования заказа:" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-        <DatePicker Name="OrderDatePicker" Grid.Row="0" Grid.Column="1"/>
 
-        <TextBlock Text="Дата доставки заказа:" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-        <DatePicker Name="DeliveryDatePicker" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock Text="Дата формирования заказа" FontSize="20" Grid.Row="0"></TextBlock>
+        <DatePicker Name="OrderDP" Grid.Row="0" FontSize="16" Grid.Column="1" HorizontalAlignment="Stretch"></DatePicker>
+        
+        <TextBlock Text="Дата доставки заказа" FontSize="20" Grid.Row="1"></TextBlock>
+        <DatePicker Name="OrderDeliveryDP" FontSize="16" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"></DatePicker>
 
-        <TextBlock Text="ФИО клиента:" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Name="ClientNameTextBox" Width="584" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,18" Grid.RowSpan="2"/>
+        <TextBlock Text="ФИО клиента" FontSize="20" Grid.Row="2"></TextBlock>
+        <TextBlock Name="ClientTB" FontSize="20" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch"></TextBlock>
+        
+        <TextBlock Text="Номер заказа" FontSize="20" Grid.Row="3"></TextBlock>
+        <TextBlock Name="TBOrderID" FontSize="20" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch"></TextBlock>
 
-        <TextBlock Text="Номер заказа:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Name="OrderNumberTextBox" Width="584" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,17,0,0" Grid.RowSpan="5"/>
+
+        <TextBlock Text="Пункт выдачи" FontSize="20" Grid.Row="5"></TextBlock>
+        <ComboBox Name="PickUpComboBox" Grid.Column="1" Grid.Row="5" Width="600" HorizontalAlignment="Left"></ComboBox>
+        <Button Name="SaveButton" Click="SaveButton_Click" Content="Сохранить" FontSize="26" Grid.Row="6" Grid.Column="2" Width="200" Height="40"></Button>
+
+        <ListView Name="ShoeListView" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="1300" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition Width="800"></ColumnDefinition>
+                            <ColumnDefinition Width="170"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.RowSpan="5" Width="300"  Stretch="UniformToFill" HorizontalAlignment="Left">
+                            <Image.Source>
+                                <Binding Path="ProductPhotoPath">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            res\picture.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        
+                        <TextBlock Text="{Binding ProductName}" Grid.Row="0" Grid.Column="1" FontSize="24" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding ProductDescription}" FontSize="24" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"></TextBlock>
+                        <TextBlock Text="{Binding ProductManufacturer}" FontSize="24" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                        
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top">
+                            <TextBlock Text="{Binding ProductCostInt}" FontSize="24"></TextBlock>
+                            <TextBlock Text=" рублей" FontSize="24"></TextBlock>
+                        </StackPanel>
+                        
+                        <TextBlock Text="Скидка" Grid.Row="0" FontSize="24" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="2">
+                            <TextBlock Text="{Binding ProductDiscountAmount}" FontSize="48"></TextBlock>
+                            <TextBlock Text=" %" FontSize="48"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
+                            <Button Name="MinusButton" Click="MinusButton_Click"  Content="-" FontSize="28" Width="50" Height="40"></Button>
+                            <TextBlock Text="{Binding OrderProductCount}" FontSize="48"></TextBlock>
+                            <Button Name="PlusButton" Click="PlusButton_Click" Content="+" FontSize="28" Width="50" Height="40"></Button>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

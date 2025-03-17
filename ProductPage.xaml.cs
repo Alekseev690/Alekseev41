@@ -20,14 +20,22 @@ namespace Alekseev41
     /// </summary>
     public partial class ProductPage : Page
     {
+        List<Product> selectedProdList = new List<Product>();
+        List<OrderProduct> selectedOrderProducts = new List<OrderProduct>();
+        private bool guestMode = false;
+        private int _newOrderID = Alekseev41Entities.GetContext().OrderProduct.Count() + 1;
+        private int _clientID;
         public ProductPage(User user)
         {
             InitializeComponent();
+
+            OrderButton.Visibility = Visibility.Hidden;
 
             if (user == null)
             {
                 FIOTB.Text = "";
                 RoleTB.Text = "";
+                guestMode = true;
             }
             else
             {
@@ -108,6 +116,51 @@ namespace Alekseev41
         private void RButtonDown_Checked(object sender, RoutedEventArgs e)
         {
             UpdateProduct();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (guestMode)
+            {
+                MessageBox.Show("Это функция доступна только авторизированным пользователям!");
+                return;
+            }
+            if (ProductListView.SelectedIndex >= 0)
+            {
+                var selectedProduct = ProductListView.SelectedItem as Product;
+                selectedProdList.Add(selectedProduct);
+
+                var newOrderProd = new OrderProduct();
+                newOrderProd.OrderID = _newOrderID;
+
+                newOrderProd.ProductArticleNumber = selectedProduct.ProductArticleNumber;
+                newOrderProd.ProductCount = 1;
+
+                var selOP = selectedOrderProducts.Where(p => Equals(p.ProductArticleNumber, selectedProduct.ProductArticleNumber));
+
+                if (selOP.Count() == 0)
+                {
+                    selectedOrderProducts.Add(newOrderProd);
+                }
+                else
+                {
+                    foreach (OrderProduct p in selectedOrderProducts)
+                    {
+                        if (p.ProductArticleNumber == selectedProduct.ProductArticleNumber)
+                            p.ProductCount++;
+                    }
+                }
+                OrderButton.Visibility = Visibility.Visible;
+                ProductListView.SelectedIndex = -1;
+            }
+        }
+
+        private void OrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            selectedProdList = selectedProdList.Distinct().ToList();
+
+            OrderWindow orderWindow = new OrderWindow(selectedOrderProducts, selectedProdList, FIOTB.Text, _clientID);
+            orderWindow.ShowDialog();
         }
     }
 }
