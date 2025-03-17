@@ -29,6 +29,7 @@ namespace Alekseev41
         public AuthPage()
         {
             InitializeComponent();
+            TBCaptcha.Visibility = Visibility.Hidden;
         }
 
         private void CaptchaEnable()
@@ -94,6 +95,7 @@ namespace Alekseev41
                 Manager.MainFrame.Navigate(new ProductPage(user));
                 LoginTB.Text = "";
                 PassTB.Text = "";
+                CaptchaDisable();
             }
             else
             {
@@ -107,7 +109,17 @@ namespace Alekseev41
                 CaptchaEnable();
             }
         }
-        
+        private void CaptchaDisable()
+        {
+            _isCaptched = true;
+            TBCaptcha.Visibility = Visibility.Hidden;
+            captchaOneWord.Text = "";
+            captchaTwoWord.Text = "";
+            captchaThreeWord.Text = "";
+            captchaFourWord.Text = "";
+            TBCaptcha.Text = "";
+        }
+
     }
 }
 

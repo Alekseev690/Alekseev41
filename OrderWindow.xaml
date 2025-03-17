@@ -1,0 +1,36 @@
+﻿<Window x:Class="Alekseev41.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Alekseev41"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="216"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Дата формирования заказа:" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+        <DatePicker Name="OrderDatePicker" Grid.Row="0" Grid.Column="1"/>
+
+        <TextBlock Text="Дата доставки заказа:" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+        <DatePicker Name="DeliveryDatePicker" Grid.Row="1" Grid.Column="1"/>
+
+        <TextBlock Text="ФИО клиента:" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+        <TextBox Name="ClientNameTextBox" Width="584" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,18" Grid.RowSpan="2"/>
+
+        <TextBlock Text="Номер заказа:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
+        <TextBox Name="OrderNumberTextBox" Width="584" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,17,0,0" Grid.RowSpan="5"/>
+    </Grid>
+</Window>
