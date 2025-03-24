@@ -34,12 +34,17 @@
         <TextBlock Text="Номер заказа" FontSize="20" Grid.Row="3"></TextBlock>
         <TextBlock Name="TBOrderID" FontSize="20" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch"></TextBlock>
 
-
         <TextBlock Text="Пункт выдачи" FontSize="20" Grid.Row="5"></TextBlock>
         <ComboBox Name="PickUpComboBox" Grid.Column="1" Grid.Row="5" Width="600" HorizontalAlignment="Left"></ComboBox>
         <Button Name="SaveButton" Click="SaveButton_Click" Content="Сохранить" FontSize="26" Grid.Row="6" Grid.Column="2" Width="200" Height="40"></Button>
 
-        <ListView Name="ShoeListView" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="1300" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
+            <TextBlock Text="Итоговая сумма:"  FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Name="TBSumProduct" TextDecorations="Strikethrough" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2"></TextBlock>
+            <TextBlock Name="TBSumProductDiscount" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
+        </StackPanel>
+        
+        <ListView Name="ShoeListView" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="1300">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -83,7 +88,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
                             <Button Name="MinusButton" Click="MinusButton_Click"  Content="-" FontSize="28" Width="50" Height="40"></Button>
-                            <TextBlock Text="{Binding OrderProductCount}" FontSize="48"></TextBlock>
+                            <TextBlock Text="{Binding GetOrderProductCount}" FontSize="48"></TextBlock>
                             <Button Name="PlusButton" Click="PlusButton_Click" Content="+" FontSize="28" Width="50" Height="40"></Button>
                         </StackPanel>
                     </Grid>

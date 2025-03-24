@@ -21,10 +21,11 @@ namespace Alekseev41
     {
         List<OrderProduct> selectedOrderProducts = new List<OrderProduct>();
         List<Product> selectedProducts = new List<Product>();
-        private int IDclient, CodeOrder, IDorder, OorderPickUpPoint;
+        private bool guest_Mode;
+        private int IDclient, CodeOrder, IDorder, OorderPickUpPoint, SumProduct = 0, SumProductWithDiscount = 0;
         private DateTime OrderDateTime = DateTime.Now, OrderDeliveryDateTime;
 
-        public OrderWindow(List<OrderProduct> selectedOrderProducts, List<Product> selectedProducts, string FIO, int clientId)
+        public OrderWindow(List<OrderProduct> selectedOrderProducts, List<Product> selectedProducts, string FIO, int clientId, bool guestMode)
         {
             InitializeComponent();
 
@@ -36,20 +37,20 @@ namespace Alekseev41
             IDorder = selectedOrderProducts.Last().OrderID + 1;
             ClientTB.Text = FIO;
             TBOrderID.Text = IDorder.ToString();
+            guest_Mode = guestMode;
 
-            foreach (Product p in selectedProducts)
-            {
-                p.ProductQuantityInStock = 1;
-                foreach (OrderProduct q in selectedOrderProducts)
-                {
-                    if (p.ProductArticleNumber == q.ProductArticleNumber)
-                        p.ProductQuantityInStock = q.ProductCount;
-                }
-            }
+            ShoeListView.ItemsSource = selectedProducts;
             this.selectedOrderProducts = selectedOrderProducts;
             this.selectedProducts = selectedProducts;
             Refresh();
             SetDeliveryDate();
+            foreach (Product product in selectedProducts)
+            {
+                SumProduct += product.ProductCostInt;
+                SumProductWithDiscount += product.ProductPriceWithDiscount;
+            }
+            TBSumProduct.Text = SumProduct.ToString();
+            TBSumProductDiscount.Text = SumProductWithDiscount.ToString();
         }
         public void Refresh()
         {
@@ -83,16 +84,16 @@ namespace Alekseev41
             OrderDateTime = (DateTime)OrderDP.SelectedDate;
             OrderDeliveryDateTime = (DateTime)OrderDeliveryDP.SelectedDate;
             OorderPickUpPoint = PickUpComboBox.SelectedIndex + 1;
-
             SetDeliveryDate();
+
             if (selectedProducts.Count == 0)
             {
-                MessageBox.Show("Ни одного продукта нет в корзине!");
+                MessageBox.Show("Нет ни одного продукта нет в корзине!");
                 return;
             }
             if (OorderPickUpPoint == 0)
             {
-                MessageBox.Show("Не выбрана точка вывоза!");
+                MessageBox.Show("Не выбрана точка для вывоза!");
                 return;
             }
 
@@ -100,29 +101,27 @@ namespace Alekseev41
             newOrder.OrderDate = OrderDateTime;
             newOrder.OrderDeliveryDate = OrderDeliveryDateTime;
             newOrder.OrderPickupPoint = OorderPickUpPoint;
-            newOrder.OrderClient = IDclient;
             newOrder.OrderCode = CodeOrder;
             newOrder.OrderStatus = "Новый";
+            if (guest_Mode)
+                newOrder.OrderClient = null;
+            else
+                newOrder.OrderClient = IDclient;
 
             foreach (Product selectprod in selectedProducts)
             {
                 OrderProduct newOrderProd = new OrderProduct();
                 newOrderProd.OrderID = IDorder;
                 newOrderProd.ProductArticleNumber = selectprod.ProductArticleNumber;
-                newOrderProd.ProductCount = selectprod.ProductQuantityInStock;
+                newOrderProd.ProductCount = selectprod.GetOrderProductCount;
 
                 newOrderProducts.Add(newOrderProd);
             }
-
-            foreach (OrderProduct ordprod in newOrderProducts)
-                Alekseev41Entities.GetContext().OrderProduct.Add(ordprod);
-            Alekseev41Entities.GetContext().Order.Add(newOrder);
             try
             {
-                Alekseev41Entities.GetContext().SaveChanges();
-
-                MessageBox.Show("Заказ успешно оформлен");
-                Manager.MainFrame.GoBack();
+                ShoeListView.ItemsSource = null;
+                MessageBox.Show("Заказ успешно оформлен!");
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -135,13 +134,18 @@ namespace Alekseev41
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
             var prod = (sender as Button).DataContext as Product;
-            prod.ProductQuantityInStock--;
+            prod.OrderProductCount--;
             var selectedOP = selectedOrderProducts.FirstOrDefault(p => p.ProductArticleNumber == prod.ProductArticleNumber);
             int index = selectedOrderProducts.IndexOf(selectedOP);
-            selectedOrderProducts[index].ProductCount--;
+            selectedOrderProducts[index].ProductCount = prod.OrderProductCount;
 
-            if (prod.ProductQuantityInStock <= 0)
+            if (prod.OrderProductCount <= 0)
                 selectedProducts.Remove(prod);
+            SumProduct -= prod.ProductCostInt;
+            SumProductWithDiscount -= prod.ProductPriceWithDiscount;
+            TBSumProduct.Text = SumProduct.ToString();
+            TBSumProductDiscount.Text = SumProductWithDiscount.ToString();
+
             Refresh();
             SetDeliveryDate();
             ShoeListView.Items.Refresh();
@@ -154,18 +158,26 @@ namespace Alekseev41
             {
                 if (prod.ProductArticleNumber == origProd.ProductArticleNumber)
                 {
-                    if (prod.ProductQuantityInStock >= origProd.ProductQuantityInStock)
+                    if (prod.OrderProductCount >= origProd.ProductQuantityInStock)
                     {
                         MessageBox.Show("Выбрано максимальное кол-во товаров!");
                         return;
                     }
                 }
             }
-            prod.ProductQuantityInStock++;
+
+            prod.OrderProductCount++;
             var selectedOP = selectedOrderProducts.FirstOrDefault(p => p.ProductArticleNumber == prod.ProductArticleNumber);
             int index = selectedOrderProducts.IndexOf(selectedOP);
-            selectedOrderProducts[index].ProductCount++;
+            selectedOrderProducts[index].ProductCount = prod.OrderProductCount;
+
+            SumProduct += prod.ProductCostInt;
+            SumProductWithDiscount += prod.ProductPriceWithDiscount;
+            TBSumProduct.Text = SumProduct.ToString();
+            TBSumProductDiscount.Text = SumProductWithDiscount.ToString();
+
             SetDeliveryDate();
+            Refresh();
             ShoeListView.Items.Refresh();
         }
     }

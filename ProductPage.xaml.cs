@@ -128,29 +128,32 @@ namespace Alekseev41
             if (ProductListView.SelectedIndex >= 0)
             {
                 var selectedProduct = ProductListView.SelectedItem as Product;
-                selectedProdList.Add(selectedProduct);
+                var existingOrderProduct = selectedOrderProducts.FirstOrDefault(p => p.ProductArticleNumber == selectedProduct.ProductArticleNumber);
 
-                var newOrderProd = new OrderProduct();
-                newOrderProd.OrderID = _newOrderID;
-
-                newOrderProd.ProductArticleNumber = selectedProduct.ProductArticleNumber;
-                newOrderProd.ProductCount = 1;
-
-                var selOP = selectedOrderProducts.Where(p => Equals(p.ProductArticleNumber, selectedProduct.ProductArticleNumber));
-
-                if (selOP.Count() == 0)
+                if (existingOrderProduct != null)
                 {
-                    selectedOrderProducts.Add(newOrderProd);
+                    // Если товар уже есть, увеличиваем количество
+                    existingOrderProduct.ProductCount++;
                 }
                 else
                 {
-                    foreach (OrderProduct p in selectedOrderProducts)
+                    // Если товара нет, добавляем новый
+                    var newOrderProd = new OrderProduct
                     {
-                        if (p.ProductArticleNumber == selectedProduct.ProductArticleNumber)
-                            p.ProductCount++;
-                    }
+                        OrderID = _newOrderID,
+                        ProductArticleNumber = selectedProduct.ProductArticleNumber,
+                        ProductCount = 1
+                    };
+                    selectedOrderProducts.Add(newOrderProd);
                 }
+
+                // Добавляем товар в список выбранных продуктов
+                selectedProdList.Add(selectedProduct);
+
+                // Показываем кнопку "Посмотреть заказы"
                 OrderButton.Visibility = Visibility.Visible;
+
+                // Сбрасываем выделение в ListView
                 ProductListView.SelectedIndex = -1;
             }
         }
@@ -159,7 +162,7 @@ namespace Alekseev41
         {
             selectedProdList = selectedProdList.Distinct().ToList();
 
-            OrderWindow orderWindow = new OrderWindow(selectedOrderProducts, selectedProdList, FIOTB.Text, _clientID);
+            OrderWindow orderWindow = new OrderWindow(selectedOrderProducts, selectedProdList, FIOTB.Text, _clientID, guestMode);
             orderWindow.ShowDialog();
         }
     }

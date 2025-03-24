@@ -32,14 +32,15 @@ namespace Alekseev41
         public int ProductQuantityInStock { get; set; }
         public string ProductDescription { get; set; }
         public string ProductPhoto { get; set; }
-        public int OrderProductCount
+
+        public int OrderProductCount = 1;
+        public int GetOrderProductCount
         {
             get
             {
-                foreach (var item in OrderProduct)
-                    return item.ProductCount;
-                return 1;
+                return OrderProductCount;
             }
+            set { }
         }
         public int ProductCostInt
         {
@@ -63,5 +64,13 @@ namespace Alekseev41
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
+
+        public int ProductPriceWithDiscount
+        {
+            get
+            {
+                return ProductCostInt - ((ProductCostInt / 100) * (int)ProductDiscountAmount);
+            }
+        }
     }
 }
