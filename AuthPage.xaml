@@ -38,7 +38,9 @@
         </StackPanel>
         
         <Button Name="LogingGuestButton" Content="Войти как гость" HorizontalAlignment="Center" Grid.Row="3" Click="LogingGuest_Click"></Button>
-        <Button Name="LoginButton" Content="Войти" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" Click="LoginButton_Click"></Button>
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3">
+            <Button Name="LoginButton" Content="Войти" Click="LoginButton_Click"></Button>
+            <TextBlock Name="Timer" Width="20" Height="20" FontSize="16" IsEnabled="False"></TextBlock>
+        </StackPanel>
     </Grid>
 </Page>

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Alekseev41
 {
@@ -22,6 +23,8 @@ namespace Alekseev41
     /// </summary>
     public partial class AuthPage : Page
     {
+        private DispatcherTimer timer;
+        private int count = 10;
         private string _captchaAnswer = "";
         private string _ValidLitters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890";
         private bool _isCaptched = false;
@@ -30,6 +33,9 @@ namespace Alekseev41
         {
             InitializeComponent();
             TBCaptcha.Visibility = Visibility.Hidden;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
         }
 
         private void CaptchaEnable()
@@ -103,7 +109,15 @@ namespace Alekseev41
                 if (TBCaptcha.IsVisible)
                 {
                     LoginButton.IsEnabled = false;
-                    await Task.Delay(10000);
+                    for (int i = 10; i >= 0; i--)
+                    {
+                        Timer.Text = i.ToString();
+                        await Task.Delay(1000); // Ждем 1 секунду
+                        if (i == 0)
+                        {
+                            Timer.Visibility = Visibility.Hidden;
+                        }
+                    }
                     LoginButton.IsEnabled = true;
                 }
                 CaptchaEnable();
@@ -119,7 +133,16 @@ namespace Alekseev41
             captchaFourWord.Text = "";
             TBCaptcha.Text = "";
         }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            count--;
+            Timer.Text = count.ToString();
 
+            if (count <= 0)
+            {
+                timer.Stop();
+            }
+        }
     }
 }
 
