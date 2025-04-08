@@ -55,6 +55,8 @@ namespace Alekseev41
 
         private void LogingGuest_Click(object sender, RoutedEventArgs e)
         {
+            LoginTB.Text = "";
+            PassTB.Text = "";
             string login = LoginTB.Text;
             string password = PassTB.Text;
             User user = Alekseev41Entities.GetContext().User.ToList().Find(p => p.UserLogin == login && p.UserPassword == password);
@@ -63,6 +65,8 @@ namespace Alekseev41
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            LoginTB.Text = "";
+            PassTB.Text = "";
             string login = LoginTB.Text;
             string password = PassTB.Text;
             if (login == "" || password == "")
