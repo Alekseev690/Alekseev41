@@ -24,11 +24,11 @@ namespace Alekseev41
     public partial class AuthPage : Page
     {
         private DispatcherTimer timer;
-        private int count = 10;
         private string _captchaAnswer = "";
         private string _ValidLitters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890";
         private bool _isCaptched = false;
-
+        private int count = 10;
+        private int _faliedAttemps = 0;
         public AuthPage()
         {
             InitializeComponent();
@@ -57,16 +57,14 @@ namespace Alekseev41
         {
             LoginTB.Text = "";
             PassTB.Text = "";
+            CaptchaDisable();
             string login = LoginTB.Text;
             string password = PassTB.Text;
             User user = Alekseev41Entities.GetContext().User.ToList().Find(p => p.UserLogin == login && p.UserPassword == password);
             Manager.MainFrame.Navigate(new ProductPage(user));
         }
-
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginTB.Text = "";
-            PassTB.Text = "";
             string login = LoginTB.Text;
             string password = PassTB.Text;
             if (login == "" || password == "")
@@ -74,7 +72,7 @@ namespace Alekseev41
                 MessageBox.Show("Есть пустые поля");
                 return;
             }
-
+            _isCaptched = false;
             if (TBCaptcha.Text == _captchaAnswer)
                 _isCaptched = true;
 
@@ -113,6 +111,7 @@ namespace Alekseev41
                 if (TBCaptcha.IsVisible)
                 {
                     LoginButton.IsEnabled = false;
+                    /*
                     for (int i = 10; i >= 0; i--)
                     {
                         Timer.Text = i.ToString();
@@ -121,7 +120,8 @@ namespace Alekseev41
                         {
                             Timer.Visibility = Visibility.Hidden;
                         }
-                    }
+                    } */
+                    await Task.Delay(10000); // Ждем 10 секунду
                     LoginButton.IsEnabled = true;
                 }
                 CaptchaEnable();
